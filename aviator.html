@@ -39,8 +39,6 @@
         </div>
       </div>
 
-
-
    <br>
    <br>
    <br>
@@ -57,9 +55,9 @@
     let isPredicting = false;
 
     function generateRandomNumber() {
-      const baseNumber = Math.random() * 12; // Gerar números entre 0 e 12
-      const randomFactor = Math.random(); // Fator aleatório
-      const randomNumber = baseNumber + randomFactor * 10; // Adicionar fator aleatório
+      const baseNumber = Math.random() * 10; // Gerar números entre 0 e 10
+      const randomFactor = Math.random() * 0.5; // Fator aleatório multiplicado por 0.7
+      const randomNumber = baseNumber + randomFactor * 3; // Adicionar fator aleatório até 3
 
       return randomNumber;
     }
@@ -70,11 +68,15 @@
     }
 
     function setCorAndEmoji(element, number) {
-      const isGreen = number <= 15; // Verificar se o número é menor ou igual a 15
-      element.textContent = isGreen ? number.toFixed(2) : "1.00";
-      element.classList.toggle("green", isGreen);
-      element.classList.toggle("red", !isGreen);
-      element.parentNode.querySelector("#emojiSpan").textContent = isGreen ? "✅" : "❌";
+      if (number <= 1.00) {
+        element.textContent = "1.00";
+        element.classList.add("red");
+        element.parentNode.querySelector("#emojiSpan").textContent = "❌";
+      } else {
+        element.textContent = number.toFixed(2);
+        element.classList.add("green");
+        element.parentNode.querySelector("#emojiSpan").textContent = "✅";
+      }
     }
 
     function updateButtonState() {
@@ -109,7 +111,7 @@
     function updateCountdown() {
       const now = new Date();
       const future = new Date(now.getTime() + 2 * 60 * 1000); // Adicionar 2 minutos
-      document.getElementById("countdown").textContent = `Entrar até ${formatTime(future)} ✅`;
+      document.getElementById("countdown").textContent = `Entrar até ${formatTime(future)} 🔥`;
       
       if (isPredicting) {
         document.getElementById("countdown").style.display = "block";
@@ -117,7 +119,7 @@
         document.getElementById("countdown").style.display = "none";
       }
     }
-    
+
     function formatTime(time) {
       const hours = time.getHours();
       const minutes = time.getMinutes();
