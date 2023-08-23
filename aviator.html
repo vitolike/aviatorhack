@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinais do Aviator</title>
+  <style>
+    .green {
+      color: green;
+    }
+    
+    .red {
+      color: red;
+    }
+  </style>
+  <!-- Incluir o link para o Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-4">
+
+
+    <div class="card">
+        <img src="https://playcrashgambling.games/wp-content/uploads/2023/06/Aviator-Logo-450x317.webp" class="card-img" alt="Logo">
+    </div>
+    <p class="text-center">Sinais do Aviator</p>
+  
+    <div class="text-center mt-3">
+      <div id="countdown" class="green"></div> <!-- Adicionado elemento para exibir o countdown -->
+      <h1><span id="lastPrediction" class="green"></span> <span id="emojiSpan"></span></h1>
+    </div>
+    
+    <div class="text-center mt-3" id="loadingText" style="display: none;">Procurando Sinal...</div>   
+    
+    
+    <div class="text-center mt-3">
+      <button id="predictButton" class="btn btn-danger btn-lg btn-block">Identificar Sinal</button>
+    </div>
+  </div>
+  
+  <!-- Incluir os links para os scripts do Bootstrap e do jQuery (necessários para o funcionamento do Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    const delayInSeconds = 5; // Atraso em segundos
+    const countdownInterval = 1000; // Intervalo de atualização do countdown em milissegundos
+
+    let isPredicting = false;
+
+    function generateRandomNumber() {
+      const baseNumber = Math.random() * 12; // Gerar números entre 0 e 12
+      const randomFactor = Math.random(); // Fator aleatório
+      const randomNumber = baseNumber + randomFactor * 10; // Adicionar fator aleatório
+
+      return randomNumber;
+    }
+
+    function predictNextNumber() {
+      const prediction = generateRandomNumber();
+      return prediction;
+    }
+
+    function setCorAndEmoji(element, number) {
+      const isGreen = number <= 15; // Verificar se o número é menor ou igual a 15
+      element.textContent = isGreen ? number.toFixed(2) : "1.00";
+      element.classList.toggle("green", isGreen);
+      element.classList.toggle("red", !isGreen);
+      element.parentNode.querySelector("#emojiSpan").textContent = isGreen ? "✅" : "❌";
+    }
+
+    function updateButtonState() {
+      const predictButton = document.getElementById("predictButton");
+      predictButton.disabled = isPredicting;
+      if (isPredicting) {
+        predictButton.textContent = `Aguarde ${delayInSeconds} segundos...`;
+      } else {
+        predictButton.textContent = `Identificar Sinal`;
+      }
+    }
+
+    function processPrediction() {
+      isPredicting = true;
+      updateButtonState();
+
+      document.getElementById("loadingText").style.display = "block"; // Mostrar o elemento "loadingText"
+      document.getElementById("loadingText").textContent = "Gerando previsão com AI...";
+
+      setTimeout(() => {
+        const prediction = predictNextNumber();
+        const lastPredictionSpan = document.getElementById("lastPrediction");
+        setCorAndEmoji(lastPredictionSpan, prediction);
+
+        isPredicting = false;
+        updateButtonState();
+
+        document.getElementById("loadingText").textContent = "Sinal encontrado";
+      }, delayInSeconds * 1000); // Convertendo segundos para milissegundos
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const future = new Date(now.getTime() + 2 * 60 * 1000); // Adicionar 2 minutos
+      document.getElementById("countdown").textContent = `Entrar até ${formatTime(future)} ✅`;
+      
+      if (isPredicting) {
+        document.getElementById("countdown").style.display = "block";
+      } else {
+        document.getElementById("countdown").style.display = "none";
+      }
+    }
+    
+    function formatTime(time) {
+      const hours = time.getHours();
+      const minutes = time.getMinutes();
+      return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const predictButton = document.getElementById("predictButton");
+
+      updateButtonState();
+      updateCountdown();
+
+      predictButton.addEventListener("click", () => {
+        processPrediction();
+        setTimeout(() => {
+          document.getElementById("lastPrediction").textContent = "N/A";
+          updateCountdown();
+        }, 2 * 60 * 1000);
+      });
+    });
+
+    setInterval(updateCountdown, countdownInterval); // Atualizar o countdown a cada intervalo
+  </script>
+</body>
+</html>
