@@ -19,25 +19,32 @@
 <body>
   <div class="container mt-4">
 
+    <div class="card shadow mb-3">
+        <img src="https://playcrashgambling.games/wp-content/uploads/2023/06/Aviator-Logo-450x317.webp" class="card-img-top" alt="Logo">
 
-    <div class="card">
-        <img src="https://playcrashgambling.games/wp-content/uploads/2023/06/Aviator-Logo-450x317.webp" class="card-img" alt="Logo">
-    </div>
-    <p class="text-center">Sinais do Aviator</p>
-  
-    <div class="text-center mt-3">
-      <div id="countdown" class="green"></div> <!-- Adicionado elemento para exibir o countdown -->
-      <h1><span id="lastPrediction" class="green"></span> <span id="emojiSpan"></span></h1>
-    </div>
-    
-    <div class="text-center mt-3" id="loadingText" style="display: none;">Procurando Sinal...</div>   
-    
-    
-    <div class="text-center mt-3">
-      <button id="predictButton" class="btn btn-danger btn-lg btn-block">Identificar Sinal</button>
-    </div>
-  </div>
-  
+        <div class="card-body">
+          <h5 class="card-title">Sinais do Aviator</h5>
+         
+            <div class="text-center mt-3">
+                <div id="countdown"></div> <!-- Adicionado elemento para exibir o countdown -->
+                <h1><span id="lastPrediction" class="green"></span> <span id="emojiSpan"></span></h1>
+              </div>
+              
+              <div class="text-center mt-3" id="loadingText" style="display: none;">Procurando Sinal...</div>   
+              
+              
+              <div class="text-center mt-3">
+                <button id="predictButton" class="btn btn-danger btn-lg btn-block">Identificar Sinal</button>
+              </div>
+        </div>
+      </div>
+
+
+
+   <br>
+   <br>
+   <br>
+   
   <!-- Incluir os links para os scripts do Bootstrap e do jQuery (necessários para o funcionamento do Bootstrap) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
